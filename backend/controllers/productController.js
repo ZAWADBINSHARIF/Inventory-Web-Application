@@ -12,10 +12,11 @@ export const getProducts = expressAsyncHandler(async (req, res, next) => {
 export const addProduct = expressAsyncHandler(async (req, res, next) => {
 
     const newProduct = await new Product({
-        name: req.body.name,
+        product_name: req.body.product_name,
         brand: req.body.brand,
         description: req.body.description || '',
-        price: req.body.price,
+        purchase_price: req.body.purchase_price,
+        sale_price: req.body.sale_price,
         categories: req.body.categories || []
     })
 

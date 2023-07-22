@@ -4,7 +4,7 @@ import crypto from "crypto"
 
 const productSchema = mongoose.Schema(
     {
-        name: {
+        product_name: {
             type: String,
             require: true,
             unique: true,
@@ -19,12 +19,19 @@ const productSchema = mongoose.Schema(
             type: String,
             trim: true
         },
-        price: {
+        purchase_price: {
+            type: Number,
+            require: true
+        },
+        sale_price: {
             type: Number,
             require: true
         },
         categories: {
             type: [String]
+        },
+        quantity: {
+            type: Number
         },
         barcode: {
             type: String,
