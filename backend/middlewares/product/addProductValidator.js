@@ -32,10 +32,12 @@ export const productInputValidation = [
     check('purchase_price')
         .trim()
         .isLength({ min: 1 })
+        .isNumeric()
         .withMessage('Purchase price is required'),
     check('sale_price')
         .trim()
         .isLength({ min: 1 })
+        .isNumeric()
         .withMessage('Sale price is required'),
     check('categories')
         .trim()
