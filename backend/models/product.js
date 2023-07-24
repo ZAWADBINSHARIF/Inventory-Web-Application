@@ -1,6 +1,10 @@
-// export import
+// external import
 import mongoose from "mongoose";
 import crypto from "crypto"
+import expressAsyncHandler from "express-async-handler";
+
+// internal import
+import Limited_stock from "./limited_stock.js";
 
 const productSchema = mongoose.Schema(
     {
@@ -33,6 +37,9 @@ const productSchema = mongoose.Schema(
         quantity: {
             type: Number
         },
+        Limited_stock: {
+            type: Number,
+        },
         barcode: {
             type: String,
             require: true,
@@ -45,10 +52,28 @@ const productSchema = mongoose.Schema(
 )
 
 productSchema.pre('save', function (next) {
-    if (!this.barcode) this.barcode = crypto.randomBytes(6).toString('hex')
+    if (!this.barcode) this.barcode = crypto.randomBytes(5).toString('hex')
     next()
 })
 
-const productModel = mongoose.model('product', productSchema)
+productSchema.post('/Update$/', expressAsyncHandler(async function (docs) {
+    console.log(docs.Limited_stock)
+    if (docs.Limited_stock && docs.quantity <= docs.Limited_stock) {
+        const result = await new Limited_stock({
+            product_name: docs.product_name,
+            brand: docs.brand,
+            quantity: docs.quantity
+        })
+
+        await result.save()
+
+    } else if (docs.Limited_stock && docs.quantity > docs.Limited_stock) {
+        await Limited_stock.findByIdAndDelete(
+            { _id: docs._id }
+        ).exec()
+    }
+}))
+
+const productModel = mongoose.model('Product', productSchema)
 
 export default productModel

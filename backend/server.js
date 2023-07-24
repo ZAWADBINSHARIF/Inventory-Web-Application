@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser'
 // internal import
 import dbConnection from './configs/dbConnection.js'
 import productRoute from './routers/productRoute.js'
+import transactionRoute from './routers/transactionRoute.js'
 
 // for getting the values of .env file
 dotenv.config()
@@ -29,6 +30,7 @@ app.use(express.urlencoded({ extended: true }))
 
 // all routers
 app.use('/', productRoute)
+app.use('/transaction', transactionRoute)
 
 
 mongoose.connection.once('open', () => {
