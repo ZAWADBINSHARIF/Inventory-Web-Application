@@ -2,7 +2,12 @@
 import express from "express"
 
 // internal import
-import { addPurchase, getAllPurchases } from "../controllers/transactionController.js"
+import {
+    addPurchase,
+    addSale,
+    getAllPurchases,
+    getAllSales
+} from "../controllers/transactionController.js"
 
 const router = express.Router()
 
@@ -12,8 +17,8 @@ router.route('/purchase')
     .post(addPurchase)
 
 // ** product sale route
-router.route('sale')
-    .get()
-
+router.route('/sale')
+    .get(getAllSales)
+    .post(addSale)
 
 export default router

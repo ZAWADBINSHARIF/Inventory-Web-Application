@@ -13,9 +13,13 @@ const saleSchema = mongoose.Schema(
         },
         per_price: {
             type: Number,
-            require: ture
+            require: true
         },
         total_price: {
+            type: Number,
+            require: true
+        },
+        profit: {
             type: Number,
             require: true
         },
