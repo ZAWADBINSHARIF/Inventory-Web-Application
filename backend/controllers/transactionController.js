@@ -66,6 +66,8 @@ export const getAllSales = expressAsyncHandler(async (_req, res) => {
 // ** route POST /transaction/sale
 // ** @access Public
 export const addSale = expressAsyncHandler(async (req, res) => {
+
+    // * TODO: checking if the sale product is in stock
     const isProductLimited = await Product.find({ product_name: req.body.product_name })
         .gte('quantity', parseFloat(req.body.quantity))
 
@@ -73,6 +75,8 @@ export const addSale = expressAsyncHandler(async (req, res) => {
     if (isProductLimited.length === 0)
         return res.status(500).json({ errorMessage: 'Product is limited' })
 
+    
+    // * TODO: the sale product has been searched
     const findProduct = await Product.findOneAndUpdate(
         { product_name: req.body.product_name },
         { $inc: { quantity: - parseFloat(req.body.quantity) } }

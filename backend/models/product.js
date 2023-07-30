@@ -31,9 +31,6 @@ const productSchema = mongoose.Schema(
             type: Number,
             require: true
         },
-        categories: {
-            type: [String]
-        },
         quantity: {
             type: Number,
             default: 0
