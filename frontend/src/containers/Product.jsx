@@ -5,7 +5,7 @@ import ProductTable from '../components/Product/ProductTable'
 const Product = () => {
     return (
         <div className="Product">
-            <div className="addProduct p-5">
+            <div className="addProduct">
                 <Row>
                     <Col>
                         <AddProduct />
