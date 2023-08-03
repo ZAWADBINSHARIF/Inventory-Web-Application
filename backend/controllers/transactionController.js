@@ -67,7 +67,7 @@ export const getAllSales = expressAsyncHandler(async (_req, res) => {
 // ** @access Public
 export const addSale = expressAsyncHandler(async (req, res) => {
 
-    // * TODO: checking if the sale product is in stock
+    // *TODO: checking if the sale product is in stock
     const isProductLimited = await Product.find({ product_name: req.body.product_name })
         .gte('quantity', parseFloat(req.body.quantity))
 
@@ -76,7 +76,7 @@ export const addSale = expressAsyncHandler(async (req, res) => {
         return res.status(500).json({ errorMessage: 'Product is limited' })
 
     
-    // * TODO: the sale product has been searched
+    // *TODO: the sale product has been searched
     const findProduct = await Product.findOneAndUpdate(
         { product_name: req.body.product_name },
         { $inc: { quantity: - parseFloat(req.body.quantity) } }
@@ -88,16 +88,15 @@ export const addSale = expressAsyncHandler(async (req, res) => {
     const profit = (req.body.per_price - findProduct.purchase_price) * req.body.quantity
     console.log(profit)
 
-    const newSaleProduct = await new Sale(
-        {
+    const newSaleProduct = await new Sale({
+            sale_id: req.body.sale_id,
             product_name: req.body.product_name,
             quantity: req.body.quantity,
             per_price: req.body.per_price,
             profit: profit,
             total_price: parseFloat(req.body.quantity) * parseFloat(req.body.per_price),
             date: req.body.date
-        }
-    )
+        })
 
     try {
         await newSaleProduct.save()

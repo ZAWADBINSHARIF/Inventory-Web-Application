@@ -11,6 +11,7 @@ const SideList = () => {
           <SideListItem
             key={index}
             item={item}
+            index={index}
           />
         ))
       }

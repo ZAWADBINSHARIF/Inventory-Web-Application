@@ -1,7 +1,7 @@
 // external import
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 import crypto from "crypto"
-import expressAsyncHandler from "express-async-handler";
+import expressAsyncHandler from "express-async-handler"
 
 // internal import
 import Limited_stock from "./limited_stock.js";
@@ -50,7 +50,7 @@ const productSchema = mongoose.Schema(
 )
 
 productSchema.pre('save', function (next) {
-    if (!this.barcode) this.barcode = crypto.randomBytes(5).toString('hex')
+    if (!this.barcode) this.barcode = crypto.randomBytes(6).toString('hex')
     next()
 })
 

@@ -1,8 +1,9 @@
 // external import
 import { LinkContainer } from 'react-router-bootstrap'
 import { Nav } from 'react-bootstrap'
+import { useState } from 'react'
 
-const SideListItem = ({ item }) => {
+const SideListItem = ({ item, index }) => {
     return (
         <div className="SideListItem">
 
@@ -13,7 +14,7 @@ const SideListItem = ({ item }) => {
                     </p>
                 </Nav.Link>
             </LinkContainer>
-            
+
         </div>
     )
 }

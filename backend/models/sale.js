@@ -3,6 +3,11 @@ import mongoose from "mongoose";
 
 const saleSchema = mongoose.Schema(
     {
+        sale_id: {
+            type: Number,
+            require: true,
+            unique: true
+        },
         product_name: {
             type: String,
             require: true
