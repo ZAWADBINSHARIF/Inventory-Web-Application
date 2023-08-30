@@ -14,7 +14,7 @@ function App() {
   const [openMenu, setOpenMenu] = useState(false)
 
   return (
-    <div className="App d-flex">
+    <main className="App d-flex">
 
       <section className="section-1">
 
@@ -41,7 +41,7 @@ function App() {
         <Outlet />
       </section>
 
-    </div>
+    </main>
   )
 }
 export default App

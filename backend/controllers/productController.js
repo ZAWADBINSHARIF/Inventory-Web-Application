@@ -5,7 +5,7 @@ import expressAsyncHandler from 'express-async-handler'
 import Product from '../models/product.js'
 
 export const getProducts = expressAsyncHandler(async (req, res) => {
-    const products = await Product.find().exec()
+    const products = await Product.find().sort({ updatedAt: -1 }).exec()
     res.status(200).json(products)
 })
 
@@ -23,11 +23,17 @@ export const addProduct = expressAsyncHandler(async (req, res) => {
 
     try {
         await newProduct.save()
-        res.status(201).json({ message: 'Product is added' })
+        res.status(201).json({ message: `${req.body.product_name} is added` })
     } catch (error) {
         res.status(500).json({
             errors: {
                 error: error.message
-        } })
+            }
+        })
     }
+})
+
+export const removeProduct = expressAsyncHandler(async (req, res) => { 
+    const product = await Product.findByIdAndDelete(req.body.productID)
+    res.status(200).json(product)
 })

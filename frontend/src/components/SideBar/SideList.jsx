@@ -1,5 +1,5 @@
 // internal import
-import SideBarData from './SideBarData.js'
+import SideBarData from './SideBarData.jsx'
 import SideListItem from './SideListItem.jsx'
 
 const SideList = () => {

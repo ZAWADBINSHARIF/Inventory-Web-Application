@@ -6,7 +6,7 @@ import { Table, Button } from "react-bootstrap"
 
 const SaleProductCart = () => {
   return (
-      <div className="SaleProductCart">
+      <div className="SaleProductCart pt-5 pt-md-0">
           <Table responsive bordered hover variant="primary">
               <thead>
                   <tr>

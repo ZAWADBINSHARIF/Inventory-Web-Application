@@ -1,48 +1,67 @@
+// external import
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { Table } from "react-bootstrap"
 
-const ProductTable = () => {
+// internal import
+import { fetchProducts } from "../../redux/productSlice"
+import ProductTableData from "./ProductTableData"
+
+const ProductTable = ({ dangerNotify }) => {
+
+  const dispatch = useDispatch()
+  const products = useSelector(state => state.products.data)
+
+  useEffect(() => {
+    dispatch(fetchProducts())
+  }, [dispatch])
+
   return (
     <div className="ProductTable pt-5">
       <p className='text-primary fs-3'>Products Add History</p>
-      <Table striped bordered hover responsive>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Product name</th>
-            <th>Quantity</th>
-            <th>Per Price</th>
-            <th></th>
-            <th>Sale price</th>
-            <th>Bar Code</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>Thornton</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>Thornton</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-        </tbody>
-      </Table>
+
+      <div className="table">
+
+        <Table striped bordered hover responsive className="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Product name</th>
+              <th>Brand</th>
+              <th>Description</th>
+              <th>Quantity</th>
+              <th>Per Price</th>
+              <th>Sale price</th>
+              <th>Bar Code</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {products.map((product, index) => (
+
+              <ProductTableData
+                key={index}
+                id={product._id}
+                indexNumber={index}
+                name={product.product_name}
+                brand={product.brand}
+                description={product.description}
+                quantity={product.quantity}
+                purchase_price={product.purchase_price}
+                sale_price={product.sale_price}
+                barcode={product.barcode}
+                dangerNotify={dangerNotify}
+              />
+
+            ))}
+
+
+          </tbody>
+        </Table>
+
+      </div>
+
     </div>
   )
 }
