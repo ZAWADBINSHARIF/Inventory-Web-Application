@@ -8,7 +8,8 @@
     "start": "node backend/server.js",
     "client": "npm run dev --prefix frontend",
     "server": "nodemon backend/server.js",
-    "dev": "concurrently \"npm run server\" \" npm run client\" "
+    "dev": "concurrently \"npm run server\" \" npm run client\" ",
+    "packages": "concurrently \"npm install\" \" npm install --prefix frontend\" "
   },
   "author": "ZAWAD BIN SHARIF",
   "license": "ISC",
