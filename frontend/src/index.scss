@@ -60,12 +60,11 @@
     }
   // ** ================ Section-2 ================
   .section-2{
-    .Product{
-      .ProductTable{
-        .table{
-          max-height: 500px;
-          overflow: scroll;
-        }  
+    .SuggestionTable{
+      
+      .table{
+        max-height: 300px;
+        overflow-y: scroll;
       }
     }
   }

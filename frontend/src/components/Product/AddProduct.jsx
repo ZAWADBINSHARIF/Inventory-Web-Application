@@ -9,13 +9,15 @@ const AddProduct = ({ successNotify }) => {
 
     const dispatch = useDispatch()
 
-    const [formValue, setFormValue] = useState({
+    const emptyForm = {
         product_name: "",
         brand: "",
         description: "",
         purchase_price: "",
         sale_price: ""
-    })
+    }
+
+    const [formValue, setFormValue] = useState({...emptyForm})
 
     const [errorsMessage, setErrorMessage] = useState({})
 
@@ -33,7 +35,7 @@ const AddProduct = ({ successNotify }) => {
         }).then(response => {
             successNotify(response.data.message)
             dispatch(fetchProducts())
-            console.log(response.data.message)
+            setFormValue({...emptyForm})
             e.target.disabled = false
         }).catch(error => {
             setErrorMessage(error.response.data.errors)

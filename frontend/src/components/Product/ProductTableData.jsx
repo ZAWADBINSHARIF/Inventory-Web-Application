@@ -14,10 +14,8 @@ const ProductTableData = (product) => {
     const handleRemove = (productID) => {
         dispatch(removeProduct(productID))
         dispatch(fetchProducts())
-        console.log(productID)
         console.log(messageFromProductSlice)
-        if (messageFromProductSlice.product_name)
-            product.dangerNotify(`${messageFromProductSlice.product_name} is removed`)
+        product.dangerNotify(`${product.name} has been removed`)
     }
 
     return (
@@ -37,7 +35,7 @@ const ProductTableData = (product) => {
                         fontSize: "32px",
                         cursor: "pointer"
                     }}
-                    onClick={() => handleRemove(product.id)}
+                    onDoubleClick={() => handleRemove(product.id)}
                 />
             </td>
 

@@ -25,6 +25,7 @@ const Product = () => {
                     <Col>
                         <AddProduct
                             successNotify={successNotify}
+                            
                         />
                     </Col>
 

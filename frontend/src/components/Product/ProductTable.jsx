@@ -30,10 +30,10 @@ const ProductTable = ({ dangerNotify }) => {
               <th>Brand</th>
               <th>Description</th>
               <th>Quantity</th>
-              <th>Per Price</th>
+              <th>Purchase Price</th>
               <th>Sale price</th>
               <th>Bar Code</th>
-              <th></th>
+              <th>Double click</th>
             </tr>
           </thead>
           <tbody>

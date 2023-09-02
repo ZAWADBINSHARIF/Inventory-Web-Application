@@ -21,9 +21,21 @@ export const getAllPurchases = expressAsyncHandler(async (_req, res) => {
 // ** route POST /transaction/purchase
 // ** @access Public
 export const addPurchase = expressAsyncHandler(async (req, res) => {
+
+    const findProduct = await Product.findOneAndUpdate(
+        {
+            $or: [
+                { barcode: req.body.barcode },
+                { product_name: req.body.product_name }
+            ]
+        },
+        { $inc: { quantity: parseFloat(req.body.quantity) } }
+    ).exec()
+
     const newPurchaseProduct = await new Purchase(
         {
-            product_name: req.body.product_name,
+            barcode: findProduct.barcode,
+            product_name: findProduct.product_name,
             quantity: req.body.quantity,
             per_price: req.body.per_price,
             total_price: parseFloat(req.body.quantity) * parseFloat(req.body.per_price),
@@ -31,18 +43,15 @@ export const addPurchase = expressAsyncHandler(async (req, res) => {
         }
     )
 
-    const findProduct = await Product.findOneAndUpdate({ product_name: req.body.product_name },
-        { $inc: { quantity: parseFloat(req.body.quantity) } }
-    ).exec()
-
     try {
         if (findProduct) {
+
             await newPurchaseProduct.save()
             await findProduct.save()
 
-            res.status(201).json({ message: 'Purchase product is added' })
+            res.status(201).json({ message: `${req.body.product_name} has been purchased` })
         } else {
-            res.status(500).json({ errorMessage: 'Product Not found' })
+            res.status(500).json({ errorMessage: `${req.body.product_name} Not found` })
         }
 
     } catch (error) {
@@ -75,7 +84,7 @@ export const addSale = expressAsyncHandler(async (req, res) => {
     if (isProductLimited.length === 0)
         return res.status(500).json({ errorMessage: 'Product is limited' })
 
-    
+
     // *TODO: the sale product has been searched
     const findProduct = await Product.findOneAndUpdate(
         { product_name: req.body.product_name },
@@ -89,14 +98,14 @@ export const addSale = expressAsyncHandler(async (req, res) => {
     console.log(profit)
 
     const newSaleProduct = await new Sale({
-            sale_id: req.body.sale_id,
-            product_name: req.body.product_name,
-            quantity: req.body.quantity,
-            per_price: req.body.per_price,
-            profit: profit,
-            total_price: parseFloat(req.body.quantity) * parseFloat(req.body.per_price),
-            date: req.body.date
-        })
+        sale_id: req.body.sale_id,
+        product_name: req.body.product_name,
+        quantity: req.body.quantity,
+        per_price: req.body.per_price,
+        profit: profit,
+        total_price: parseFloat(req.body.quantity) * parseFloat(req.body.per_price),
+        date: req.body.date
+    })
 
     try {
         await newSaleProduct.save()

@@ -36,7 +36,7 @@ function App() {
         }
       </section>
 
-      <section className="section-2 w-100 p-md-5 px-1">
+      <section className="section-2 min-vh-100 overflow-y-scroll p-md-5 px-1">
         <Header />
         <Outlet />
       </section>

@@ -23,7 +23,7 @@ export const addProduct = expressAsyncHandler(async (req, res) => {
 
     try {
         await newProduct.save()
-        res.status(201).json({ message: `${req.body.product_name} is added` })
+        res.status(201).json({ message: `${req.body.product_name} has been added` })
     } catch (error) {
         res.status(500).json({
             errors: {
