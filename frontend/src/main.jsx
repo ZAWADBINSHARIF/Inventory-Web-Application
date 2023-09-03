@@ -22,6 +22,8 @@ import store from './redux/store.js'
 import './index.scss'
 import axios from 'axios'
 
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || "http://localhost:3000/api"
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />} errorElement={<ErrorPage />}>
@@ -34,12 +36,10 @@ const router = createBrowserRouter(
   )
 )
 
-axios.defaults.baseURL = "http://localhost:3000/api"
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-    <RouterProvider router={router} />
+      <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>,
 )
