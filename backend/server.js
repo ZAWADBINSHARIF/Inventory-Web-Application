@@ -3,6 +3,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
+import cors from 'cors'
 
 // internal import
 import dbConnection from './configs/dbConnection.js'
@@ -14,9 +15,16 @@ dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT || 5000
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200
+}
 
 // database connection
 dbConnection()
+
+// allow cors cross orgin
+// app.use(cors(corsOptions))
 
 // for getting cookies
 app.use(cookieParser())
