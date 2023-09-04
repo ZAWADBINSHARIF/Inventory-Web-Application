@@ -22,7 +22,7 @@ import store from './redux/store.js'
 import './index.scss'
 import axios from 'axios'
 
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || "http://localhost:3000/api"
+axios.defaults.baseURL = import.meta.env.VITE_DEFAULT_BASE_URL
 
 const router = createBrowserRouter(
   createRoutesFromElements(

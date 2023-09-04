@@ -41,6 +41,7 @@ export function fetchProducts() {
                 dispatch(setProducts(response.data))
                 dispatch(setStatus(STATUS.IDLE))
             }).catch(error => {
+                console.log(error)
                 console.log(error.response.data)
                 dispatch(setStatus(STATUS.ERROR))
             })
