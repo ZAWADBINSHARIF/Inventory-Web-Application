@@ -16,7 +16,7 @@ dotenv.config()
 const app = express()
 const PORT = process.env.PORT || 5000
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: process.env.ALLOW_CROSS,
     optionsSuccessStatus: 200
 }
 
@@ -24,7 +24,7 @@ const corsOptions = {
 dbConnection()
 
 // allow cors cross orgin
-// app.use(cors(corsOptions))
+app.use(cors(corsOptions))
 
 // for getting cookies
 app.use(cookieParser())

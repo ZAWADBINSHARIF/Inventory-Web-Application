@@ -22,8 +22,7 @@ import store from './redux/store.js'
 import './index.scss'
 import axios from 'axios'
 
-// axios.defaults.baseURL = import.meta.env.VITE_DEFAULT_BASE_URL
-axios.defaults.baseURL = 'http://localhost:4000/'
+axios.defaults.baseURL = import.meta.env.VITE_DEFAULT_BASE_URL
 
 const router = createBrowserRouter(
   createRoutesFromElements(
