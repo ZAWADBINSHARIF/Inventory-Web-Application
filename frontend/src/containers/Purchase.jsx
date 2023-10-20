@@ -1,7 +1,7 @@
 // external import
 import { Row, Col } from "react-bootstrap"
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify'
+
 
 
 // internal import
@@ -18,7 +18,6 @@ const Purchase = () => {
   });
   return (
     <div className="Purchase">
-      <ToastContainer />
       <Row>
         <Col>
           <AddPurchase

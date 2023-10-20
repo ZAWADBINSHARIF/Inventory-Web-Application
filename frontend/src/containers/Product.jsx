@@ -1,7 +1,6 @@
 // external import
 import { Col, Row } from 'react-bootstrap'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+import {toast } from 'react-toastify'
 
 // internal import
 import AddProduct from '../components/Product/AddProduct'
@@ -20,7 +19,7 @@ const Product = () => {
     return (
         <div className="Product">
             <div className="addProduct">
-                <ToastContainer />
+                
                 <Row>
                     <Col>
                         <AddProduct

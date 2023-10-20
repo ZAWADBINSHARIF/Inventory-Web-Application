@@ -14,12 +14,16 @@ const AddPurchase = ({ dangerNotify, successNotify }) => {
     const dispatch = useDispatch()
     const allProducts = useSelector(state => state.products.data)
 
+    const current = new Date()
+    const today = `${current.getFullYear()}-${current.getMonth() + 1}-${current.getDate()}`
+
     const emptyForm = {
         barcode: '',
         product_name: '',
         quantity: 0,
         per_price: 0,
         total_price: 0,
+        date: today
     }
 
     const [formData, setFormData] = useState(emptyForm)
@@ -49,6 +53,7 @@ const AddPurchase = ({ dangerNotify, successNotify }) => {
             per_price: product.purchase_price,
             quantity: formData.quantity,
             total_price: product.purchase_price * formData.quantity || 0,
+            date: formData.date
         }
         setFormData(value)
         setShwoSearchTable(false)
@@ -59,7 +64,7 @@ const AddPurchase = ({ dangerNotify, successNotify }) => {
         e.preventDefault()
 
         e.target.disabled = true
-        
+        console.log(formData)
         axios.post('/transaction/purchase', {
             ...formData
         }).then(response => {
@@ -73,7 +78,7 @@ const AddPurchase = ({ dangerNotify, successNotify }) => {
 
         e.target.disabled = false
     }
-    
+
     useEffect(() => {
         dispatch(fetchProducts())
     }, [dispatch])
@@ -129,6 +134,12 @@ const AddPurchase = ({ dangerNotify, successNotify }) => {
                             <Form.Text className="text-danger">
                                 {errorMessage.total_price.msg}
                             </Form.Text>}
+                    </Form.Group>
+                </Col>
+                <Col xs={12} sm={12} md={4} lg={3} xl>
+                    <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                        <Form.Label>Total price</Form.Label>
+                        <Form.Control type="date" name="date" min={'2010-01-01'}  value={formData.date} onChange={handleInput} />
                     </Form.Group>
                 </Col>
             </Row>

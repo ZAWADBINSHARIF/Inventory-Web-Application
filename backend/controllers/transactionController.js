@@ -13,7 +13,7 @@ import Sale from '../models/sale.js'
 // ** @access Public
 export const getAllPurchases = expressAsyncHandler(async (_req, res) => {
     const allPurchases = await Purchase.find().exec()
-
+    
     res.json(allPurchases)
 })
 
@@ -21,7 +21,9 @@ export const getAllPurchases = expressAsyncHandler(async (_req, res) => {
 // ** route POST /transaction/purchase
 // ** @access Public
 export const addPurchase = expressAsyncHandler(async (req, res) => {
-
+    
+    const data = req.body
+    console.log(data)
     const findProduct = await Product.findOneAndUpdate(
         {
             $or: [

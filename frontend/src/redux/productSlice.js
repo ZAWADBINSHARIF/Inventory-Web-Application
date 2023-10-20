@@ -1,7 +1,6 @@
 // external import
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { useSelector } from "react-redux";
 
 export const STATUS = Object.freeze({
     LOADING: 'loading',
@@ -29,7 +28,7 @@ const productSlice = createSlice({
     }
 })
 
-export const { setProducts, setStatus, setMessage, setSuggestionLists } = productSlice.actions
+export const { setProducts, setStatus, setMessage } = productSlice.actions
 export default productSlice.reducer
 
 export function fetchProducts() {

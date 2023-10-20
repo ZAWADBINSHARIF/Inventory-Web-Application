@@ -2,6 +2,8 @@
 import { useState } from "react"
 import { Outlet } from "react-router-dom"
 import { useWindowSize } from 'react-use'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 // internal import
 import Header from "./components/Header"
@@ -16,6 +18,7 @@ function App() {
   return (
     <main className="App d-flex">
 
+      <ToastContainer />
       <section className="section-1">
 
         {
