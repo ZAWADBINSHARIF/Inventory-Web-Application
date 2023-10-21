@@ -8,6 +8,10 @@ const saleSchema = mongoose.Schema(
             require: true,
             unique: true
         },
+        barcode: {
+            type: String,
+            require: true
+        },
         product_name: {
             type: String,
             require: true

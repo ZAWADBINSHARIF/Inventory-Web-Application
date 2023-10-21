@@ -1,7 +1,7 @@
 function SuggestionTableData({ product, focusInput, handleInsertValueInput }) {
     let result
     if (focusInput?.vlaue !== '') {
-        result = product[focusInput.name].toLowerCase()
+        result = product[focusInput.name]?.toLowerCase()
             .startsWith(focusInput?.value?.toLowerCase())
     }
     if (result) {
