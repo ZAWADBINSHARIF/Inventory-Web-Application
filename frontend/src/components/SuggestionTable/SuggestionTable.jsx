@@ -5,8 +5,6 @@ import { Table } from "react-bootstrap"
 import SuggestionTableData from "./SuggestionTableData"
 
 const SuggestionTable = ({ allProducts, focusInput, handleInsertValueInput }) => {
-    console.log(allProducts)
-
     return (
         <div className="SuggestionTable">
             <p className="pt-4 text-primary fs-3">Search Result</p>

@@ -2,10 +2,12 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Form, Button } from "react-bootstrap"
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 // internal import
 import SuggestionTable from '../SuggestionTable/SuggestionTable.jsx'
 import { fetchProducts } from '../../redux/productSlice.js'
+import { setSaleProductsListItem } from '../../redux/saleSlice.js'
 
 const ProductSaleForm = () => {
 
@@ -13,6 +15,7 @@ const ProductSaleForm = () => {
     const dispatch = useDispatch()
 
     const emptyForm = {
+        _id: '',
         barcode: '',
         product_name: '',
         quantity: 0,
@@ -36,40 +39,45 @@ const ProductSaleForm = () => {
                 ...formData,
                 [name]: value,
                 total_price: formData.per_price * value || 0,
-                profit: (formData.sale_price - formData.per_purchase_price) * value,
-                stock_quantity: (formData.inStock_quantity - value) >= 0 ? setStockMessage(null) : setStockMessage(`Only ${formData.inStock_quantity} in stock`)
+                profit: (formData.per_price - formData.per_purchase_price) * value,
+                stock_quantity: (formData.inStock_quantity - value) >= 0 ? setStockMessage(null) : setStockMessage(`Only ${formData.inStock_quantity} left in stock`)
             })
         } else {
             setFormData({ ...formData, [name]: value })
             setFocusInput({ name: name, value: value })
             setShwoSearchTable(true)
         }
-        console.log(focusInput)
     }
 
     function handleInsertValueInput(product) {
         const value = {
+            _id: product._id,
             barcode: product.barcode,
             product_name: product.product_name,
             per_price: product.sale_price,
             per_purchase_price: product.purchase_price,
-            profit: (product.sale_price - product.per_purchase_price),
+            profit: (product.sale_price - product.per_purchase_price) * formData.quantity,
             quantity: formData.quantity,
             inStock_quantity: product.quantity,
-            stock_quantity: (product.quantity - formData.quantity) >= 0 ? setStockMessage(null) : setStockMessage(`Only ${product.quantity} in stock`),
+            stock_quantity: (product.quantity - formData.quantity) >= 0
+                ? setStockMessage(null)
+                : setStockMessage(`Only ${product.quantity} left in stock`),
             total_price: product.sale_price * formData.quantity || 0,
         }
         setFormData(value)
-        console.log(product)
         setShwoSearchTable(false)
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        if (stockMessage) return;
-    }
 
-    console.log(allProducts)
+        if (stockMessage) return toast.error(stockMessage)
+
+        if (formData.quantity <= 0)
+            return toast.error('Set product quantity')
+
+        dispatch(setSaleProductsListItem(formData))
+    }
 
     useEffect(() => {
         dispatch(fetchProducts())
