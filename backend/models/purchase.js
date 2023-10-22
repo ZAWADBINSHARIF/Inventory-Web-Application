@@ -22,7 +22,15 @@ const purchaseSchema = mongoose.Schema(
         date: {
             type: Date,
             require: true
+        },
+        product: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Product",
+            required: true
         }
+    },
+    {
+        timestamps: true
     }
 )
 

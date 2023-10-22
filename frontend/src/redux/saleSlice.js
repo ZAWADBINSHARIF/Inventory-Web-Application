@@ -1,4 +1,5 @@
 // external import
+import axios from 'axios'
 import { createSlice } from "@reduxjs/toolkit"
 
 
@@ -16,7 +17,7 @@ const saleSlice = createSlice({
             let isUpdate = false
 
             state.saleProductsList.map(item => {
-                if (item._id == action.payload._id) {
+                if (item.product_info == action.payload.product_info) {
                     isUpdate = true
 
                     if (parseInt(item.quantity) + parseInt(action.payload.quantity) > item.inStock_quantity) return
@@ -34,7 +35,7 @@ const saleSlice = createSlice({
 
         },
         removeSaleProductsListItem(state, action) {
-            state.saleProductsList = state.saleProductsList.filter(item => item._id != action.payload)
+            state.saleProductsList = state.saleProductsList.filter(item => item.product_info != action.payload)
         }
     }
 })
@@ -42,3 +43,28 @@ const saleSlice = createSlice({
 export const { setSoldProducts, setSaleProductsListItem, removeSaleProductsListItem } = saleSlice.actions
 export default saleSlice.reducer
 
+export function fetchSaleProductsThunk() {
+    return async function (dispatch, getState) {
+        try {
+            const data = await axios.get('/transaction/sale')
+            dispatch(setSoldProducts(data))
+        } catch (error) {
+            console.log(error)
+            console.log(error.response.data)
+        }
+    }
+}
+
+export function saleProductsThunk() {
+    return async function (dispatch, getState) {
+        try {
+            const saleItemLists = getState().sales.saleProductsList
+            console.log(saleItemLists)
+            await axios.post('/transaction/sale', { saleItemLists })
+
+        } catch (error) {
+            console.log(error)
+            console.log(error.response.data)
+        }
+    }
+}

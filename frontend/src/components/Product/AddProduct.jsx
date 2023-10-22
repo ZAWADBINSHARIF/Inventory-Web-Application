@@ -35,7 +35,8 @@ const AddProduct = ({ successNotify }) => {
         }).then(response => {
             successNotify(response.data.message)
             dispatch(fetchProducts())
-            setFormValue({...emptyForm})
+            setFormValue({ ...emptyForm })
+            setErrorMessage({})
             e.target.disabled = false
         }).catch(error => {
             setErrorMessage(error.response.data.errors)

@@ -4,9 +4,8 @@ import mongoose from "mongoose";
 const saleSchema = mongoose.Schema(
     {
         sale_id: {
-            type: Number,
+            type: String,
             require: true,
-            unique: true
         },
         barcode: {
             type: String,
@@ -24,6 +23,10 @@ const saleSchema = mongoose.Schema(
             type: Number,
             require: true
         },
+        per_purchase_price: {
+            type: Number,
+            require: true
+        },
         total_price: {
             type: Number,
             require: true
@@ -35,7 +38,15 @@ const saleSchema = mongoose.Schema(
         date: {
             type: Date,
             require: true
+        },
+        product_info: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Product",
+            required: true
         }
+    },
+    {
+        timestamps: true
     }
 )
 

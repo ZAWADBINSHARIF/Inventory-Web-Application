@@ -8,6 +8,7 @@ import axios from "axios"
 // internal import
 import { fetchProducts } from "../../redux/productSlice.js"
 import SuggestionTable from "../SuggestionTable/SuggestionTable.jsx"
+import { fetchPurchases } from "../../redux/purchaseSlice.js"
 
 const AddPurchase = ({ dangerNotify, successNotify }) => {
 
@@ -48,6 +49,7 @@ const AddPurchase = ({ dangerNotify, successNotify }) => {
 
     function handleInsertValueInput(product) {
         const value = {
+            _id:product._id,
             barcode: product.barcode,
             product_name: product.product_name,
             per_price: product.purchase_price,
@@ -68,8 +70,9 @@ const AddPurchase = ({ dangerNotify, successNotify }) => {
         axios.post('/transaction/purchase', {
             ...formData
         }).then(response => {
-            console.log(response.data)
+            dispatch(fetchPurchases())
             successNotify(response.data.message)
+            setFormData(emptyForm)
             setErrorMessage({})
         }).catch(error => {
             setErrorMessage(error.response.data.errors)

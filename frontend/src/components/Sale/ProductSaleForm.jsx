@@ -15,7 +15,7 @@ const ProductSaleForm = () => {
     const dispatch = useDispatch()
 
     const emptyForm = {
-        _id: '',
+        product_info: '',
         barcode: '',
         product_name: '',
         quantity: 0,
@@ -51,7 +51,7 @@ const ProductSaleForm = () => {
 
     function handleInsertValueInput(product) {
         const value = {
-            _id: product._id,
+            product_info: product._id,
             barcode: product.barcode,
             product_name: product.product_name,
             per_price: product.sale_price,

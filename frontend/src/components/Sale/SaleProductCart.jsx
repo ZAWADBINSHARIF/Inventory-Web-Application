@@ -1,13 +1,20 @@
 // external import
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Table, Button } from "react-bootstrap"
 
 // internal import
 import SaleProductCartTableRow from "./SaleProductCartTableRow"
+import { saleProductsThunk } from "../../redux/saleSlice"
 
 const SaleProductCart = () => {
 
     const saleProductsList = useSelector(state => state.sales.saleProductsList)
+    const dispatch = useDispatch()
+
+    const handleSaleProducts = (e) => {
+        e.preventDefault()
+        dispatch(saleProductsThunk())
+    }
     
     return (
         <div className="SaleProductCart pt-5 pt-md-0">
@@ -39,7 +46,7 @@ const SaleProductCart = () => {
                 </tbody>
             </Table>
             {saleProductsList.length > 0 &&
-                <Button variant="primary" type="submit">
+                <Button variant="primary" onClick={ handleSaleProducts}>
                     Comfirm
                 </Button>
             }
