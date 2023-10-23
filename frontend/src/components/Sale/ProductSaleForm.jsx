@@ -63,7 +63,7 @@ const ProductSaleForm = () => {
             product_name: product.product_name,
             per_price: product.sale_price,
             per_purchase_price: product.purchase_price,
-            profit: (product.sale_price - product.per_purchase_price) * formData.quantity,
+            profit: (parseFloat(product.sale_price) - parseFloat(product.per_purchase_price)) * parseFloat(formData.quantity),
             quantity: formData.quantity,
             inStock_quantity: product.quantity,
             stock_quantity: (product.quantity - formData.quantity) >= 0

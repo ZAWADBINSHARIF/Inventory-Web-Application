@@ -15,6 +15,7 @@ const SuggestionTable = ({ allProducts, focusInput, handleInsertValueInput }) =>
                         <tr>
                             <th>Bar Code</th>
                             <th>Product name</th>
+                            <th>Quantity</th>
                         </tr>
                     </thead>
                     <tbody>

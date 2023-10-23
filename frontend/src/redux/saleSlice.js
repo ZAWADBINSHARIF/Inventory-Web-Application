@@ -28,10 +28,10 @@ const saleSlice = createSlice({
                 if (item.product_info == action.payload.product_info) {
                     isUpdate = true
 
-                    if (parseInt(item.quantity) + parseInt(action.payload.quantity) > item.inStock_quantity) return
+                    if (parseFloat(item.quantity) + parseFloat(action.payload.quantity) > item.inStock_quantity) return
 
-                    item.quantity = parseInt(item.quantity) + parseInt(action.payload.quantity)
-                    item.total_price = parseInt(item.quantity) * parseInt(item.per_price)
+                    item.quantity = parseFloat(item.quantity) + parseFloat(action.payload.quantity)
+                    item.total_price = parseFloat(item.quantity) * parseFloat(item.per_price)
 
                     return item
                 } else

@@ -9,6 +9,7 @@ function SuggestionTableData({ product, focusInput, handleInsertValueInput }) {
             <tr id={product._id} onClick={()=> handleInsertValueInput(product)}>
                 <td>{product.barcode}</td>
                 <td>{product.product_name}</td>
+                <td>{product.quantity}</td>
             </tr>
         )
     }

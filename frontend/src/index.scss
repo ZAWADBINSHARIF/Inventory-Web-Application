@@ -46,6 +46,7 @@
           transition: 0.3s;
 
           &:hover {
+            border-radius: 8px;
             background-color: #0954c4;
           }
 
@@ -58,6 +59,7 @@
   }
   // ** ================ Section-2 ================
   .section-2 {
+    width: 100%;
 
     .SuggestionTable {
       .table {

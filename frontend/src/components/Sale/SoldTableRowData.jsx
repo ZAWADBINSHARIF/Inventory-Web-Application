@@ -18,7 +18,7 @@ const SoldTableRowData = ({
             <td>{per_price}</td>
             <td>{total_price}</td>
             {profit
-                && <td className="text-success">{profit}</td>
+                && <td className={profit >= 0 ? "text-success": "text-bg-danger"}>{profit}</td>
             }
             <td>{barcode}</td>
             <td>{sale_id}</td>
