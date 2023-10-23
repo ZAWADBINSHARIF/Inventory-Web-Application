@@ -4,7 +4,7 @@ import { Row, Col } from "react-bootstrap"
 // internal import
 import ProductSaleForm from "../components/Sale/ProductSaleForm"
 import SaleProductCart from "../components/Sale/SaleProductCart"
-import SaleTable from "../components/Sale/SaleTable"
+import SoldTable from "../components/Sale/SoldTable"
 
 const Sale = () => {
   return (
@@ -22,7 +22,7 @@ const Sale = () => {
         </Col>
         <Col>
           {/* Sale Products History  */}
-          <SaleTable/>
+          <SoldTable/>
         </Col>
       </Row>
     </div>

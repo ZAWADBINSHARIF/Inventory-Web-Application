@@ -122,7 +122,7 @@ const AddPurchase = ({ dangerNotify, successNotify }) => {
                 <Col xs={12} sm={12} md={4} lg={3} xl>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                         <Form.Label>Per price</Form.Label>
-                        <Form.Control type="number" placeholder="Per price" name="per_price" value={formData.per_price} onChange={handleInput} />
+                        <Form.Control type="number" disabled placeholder="Per price" name="per_price" value={formData.per_price} onChange={handleInput} />
                         {errorMessage.per_price &&
                             <Form.Text className="text-danger">
                                 {errorMessage.per_price.msg}
@@ -132,7 +132,7 @@ const AddPurchase = ({ dangerNotify, successNotify }) => {
                 <Col xs={12} sm={12} md={4} lg={3} xl>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                         <Form.Label>Total price</Form.Label>
-                        <Form.Control type="number" placeholder="Total price" name="total_price" value={formData.total_price} onChange={handleInput} />
+                        <Form.Control type="number" disabled placeholder="Total price" name="total_price" value={formData.total_price} onChange={handleInput} />
                         {errorMessage.total_price &&
                             <Form.Text className="text-danger">
                                 {errorMessage.total_price.msg}

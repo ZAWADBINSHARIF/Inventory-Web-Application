@@ -5,7 +5,7 @@ import expressAsyncHandler from 'express-async-handler'
 import Product from '../models/product.js'
 
 export const getProducts = expressAsyncHandler(async (req, res) => {
-    const products = await Product.find().sort({ updatedAt: -1 }).exec()
+    const products = await Product.find().sort({ createdAt: -1 }).exec()
     res.status(200).json(products)
 })
 

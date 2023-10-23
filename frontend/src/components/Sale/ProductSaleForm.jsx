@@ -8,10 +8,12 @@ import { toast } from 'react-toastify'
 import SuggestionTable from '../SuggestionTable/SuggestionTable.jsx'
 import { fetchProducts } from '../../redux/productSlice.js'
 import { setSaleProductsListItem } from '../../redux/saleSlice.js'
+import { STATUS } from '../../redux/saleSlice.js'
 
 const ProductSaleForm = () => {
 
     const allProducts = useSelector(state => state.products.data)
+    const { status } = useSelector(state => state.sales)
     const dispatch = useDispatch()
 
     const emptyForm = {
@@ -19,7 +21,7 @@ const ProductSaleForm = () => {
         barcode: '',
         product_name: '',
         quantity: 0,
-        inStock_quantity: '',
+        inStock_quantity: 0,
         per_price: 0,
         per_purchase_price: 0,
         total_price: 0,
@@ -30,6 +32,7 @@ const ProductSaleForm = () => {
     const [focusInput, setFocusInput] = useState({ name: '', value: '' })
     const [showSearchTable, setShwoSearchTable] = useState(false)
     const [stockMessage, setStockMessage] = useState(null)
+
 
     const handleInputData = (e) => {
         const { name, value } = e.target
@@ -50,6 +53,10 @@ const ProductSaleForm = () => {
     }
 
     function handleInsertValueInput(product) {
+        if (product.inStock_quantity == 0) {
+            toast.error(`${product.product_name} is out of stock`)
+            return
+        }
         const value = {
             product_info: product._id,
             barcode: product.barcode,
@@ -77,6 +84,7 @@ const ProductSaleForm = () => {
             return toast.error('Set product quantity')
 
         dispatch(setSaleProductsListItem(formData))
+        setFormData(emptyForm)
     }
 
     useEffect(() => {
@@ -118,8 +126,7 @@ const ProductSaleForm = () => {
                             />
                             {stockMessage
                                 && formData.inStock_quantity
-                                &&
-                                <Form.Text className="text-danger">
+                                && <Form.Text className="text-danger">
                                     {stockMessage}
                                 </Form.Text>
                             }
@@ -144,7 +151,7 @@ const ProductSaleForm = () => {
                         </Form.Group>
                     </Col>
                 </Row>
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" disabled={status === STATUS.LOADING ? true : false} >
                     Add To Cart ↦
                 </Button>
 

@@ -6,22 +6,22 @@ import { useDispatch } from "react-redux"
 import { removeSaleProductsListItem } from "../../redux/saleSlice"
 
 const SaleProductCartTableRow = ({
-  _id,
+  product_info,
   index,
   product_name,
   quantity,
   per_price,
-  total_price
+  total_price,
 }) => {
 
   const dispatch = useDispatch()
 
   const handleRemove = () => {
-    dispatch(removeSaleProductsListItem(_id))
+    dispatch(removeSaleProductsListItem(product_info))
   }
 
   return (
-    <tr id={_id}>
+    <tr id={product_info}>
       <td>{index + 1}</td>
       <td>{product_name}</td>
       <td>{quantity}</td>

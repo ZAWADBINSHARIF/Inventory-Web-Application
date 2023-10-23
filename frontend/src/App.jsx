@@ -18,7 +18,7 @@ function App() {
   return (
     <main className="App d-flex">
 
-      <ToastContainer />
+      <ToastContainer/>
       <section className="section-1">
 
         {

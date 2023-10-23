@@ -70,7 +70,7 @@ export const addPurchase = expressAsyncHandler(async (req, res) => {
 // ** route GET /transaction/sale
 // ** @access Public
 export const getAllSales = expressAsyncHandler(async (_req, res) => {
-    const allSales = await Sale.find().exec()
+    const allSales = await Sale.find().sort({createdAt: -1}).exec()
 
     res.json(allSales)
 })
@@ -82,7 +82,6 @@ export const addSale = expressAsyncHandler(async (req, res) => {
     const { saleItemLists } = req.body
     const sale_id = crypto.randomUUID()
     const values = []
-    console.log(sale_id)
 
     saleItemLists.map(product => {
         values.push(
@@ -95,54 +94,29 @@ export const addSale = expressAsyncHandler(async (req, res) => {
                 per_purchase_price: product.per_purchase_price,
                 total_price: product.total_price,
                 profit: product.profit,
-                date: product.date,
                 product_info: product.product_info
             }
         )
     })
 
     Sale.insertMany(values).then(data => {
-        console.log(data)
+        data.map(item => {
+
+            Product.findOneAndUpdate(
+                { _id: item.product_info },
+                { $inc: { quantity: - parseFloat(item.quantity) } }
+            ).catch(err => {
+                console.log(err)
+                res.status(500).json({ errorMessage: error.message })
+            })
+
+        })
+
         res.status(200).json('Sold product')
 
+    }).catch(error => {
+        console.log(error)
+        res.status(500).json({ errorMessage: error.message })
     })
 
-
-    // // *TODO: checking if the sale product is in stock
-    // const isProductLimited = await Product.find({ product_name: req.body.product_name })
-    //     .gte('quantity', parseFloat(req.body.quantity))
-
-
-    // if (isProductLimited.length === 0)
-    //     return res.status(500).json({ errorMessage: 'Product is limited' })
-
-
-    // // *TODO: the sale product has been searched
-    // const findProduct = await Product.findOneAndUpdate(
-    //     { product_name: req.body.product_name },
-    //     { $inc: { quantity: - parseFloat(req.body.quantity) } }
-    // )
-
-    // if (!findProduct)
-    //     return res.status(500).json({ errorMessage: 'Product is limited' })
-
-    // const newSaleProduct = await new Sale({
-    //     sale_id: req.body.sale_id,
-    //     product_name: req.body.product_name,
-    //     quantity: req.body.quantity,
-    //     per_price: req.body.per_price,
-    //     profit: req.body.profit,
-    //     total_price: parseFloat(req.body.quantity) * parseFloat(req.body.per_price),
-    //     date: req.body.date,
-    //     product: req.body._id
-    // })
-
-    // try {
-    //     await newSaleProduct.save()
-    //     await findProduct.save()
-
-    //     res.status(201).json({ message: 'Sale product is added' })
-    // } catch (error) {
-    //     res.status(500).json({ errorMessage: error.message })
-    // }
 })

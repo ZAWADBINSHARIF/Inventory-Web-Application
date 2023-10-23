@@ -35,10 +35,6 @@ const saleSchema = mongoose.Schema(
             type: Number,
             require: true
         },
-        date: {
-            type: Date,
-            require: true
-        },
         product_info: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Product",
