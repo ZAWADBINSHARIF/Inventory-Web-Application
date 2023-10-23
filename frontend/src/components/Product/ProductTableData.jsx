@@ -28,7 +28,7 @@ const ProductTableData = (product) => {
             <td>{product.purchase_price}</td>
             <td>{product.sale_price}</td>
             <td>{product.barcode}</td>
-            <td>
+            <td className='text-center'>
                 <MdDelete
                     style={{
                         color: 'red',

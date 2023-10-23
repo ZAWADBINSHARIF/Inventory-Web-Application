@@ -33,7 +33,7 @@ const ProductTable = ({ dangerNotify }) => {
               <th>Purchase Price</th>
               <th>Sale price</th>
               <th>Bar Code</th>
-              <th>Double click</th>
+              <th>Double Click</th>
             </tr>
           </thead>
           <tbody>
