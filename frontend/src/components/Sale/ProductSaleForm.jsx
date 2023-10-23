@@ -42,7 +42,7 @@ const ProductSaleForm = () => {
                 ...formData,
                 [name]: value,
                 total_price: formData.per_price * value || 0,
-                profit: (formData.per_price - formData.per_purchase_price) * value,
+                profit: (parseFloat(formData.per_price) - parseFloat(formData.per_purchase_price)) * parseFloat(value),
                 stock_quantity: (formData.inStock_quantity - value) >= 0 ? setStockMessage(null) : setStockMessage(`Only ${formData.inStock_quantity} left in stock`)
             })
         } else {

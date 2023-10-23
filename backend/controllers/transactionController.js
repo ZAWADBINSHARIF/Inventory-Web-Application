@@ -90,7 +90,7 @@ export const addSale = expressAsyncHandler(async (req, res) => {
                 barcode: product.barcode,
                 product_name: product.product_name,
                 quantity: product.quantity,
-                per_price: product.quantity,
+                per_price: product.per_price,
                 per_purchase_price: product.per_purchase_price,
                 total_price: product.total_price,
                 profit: product.profit,

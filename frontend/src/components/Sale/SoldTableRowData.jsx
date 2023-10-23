@@ -14,7 +14,6 @@ const SoldTableRowData = ({
     const dateAndTime = new Date(date)
     const soldDateAndTime = `${dateAndTime.getDate()}/${dateAndTime.getMonth() + 1}/${dateAndTime.getFullYear()} 
     [${dateAndTime.getHours()}h-${dateAndTime.getMinutes()}m-${dateAndTime.getSeconds()}s]`
-    console.log(soldDateAndTime)
 
     return (
         <tr id={_id}>
