@@ -35,6 +35,7 @@ const SaleProductCartTableRow = ({
             cursor: "pointer"
           }}
           onDoubleClick={handleRemove}
+          title='Dobule Click'
         />
       </td>
     </tr>

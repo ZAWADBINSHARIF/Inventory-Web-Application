@@ -1,3 +1,6 @@
+// external import 
+import { format } from 'date-fns'
+
 const SoldTableRowData = ({
     _id,
     index,
@@ -12,8 +15,7 @@ const SoldTableRowData = ({
 }) => {
 
     const dateAndTime = new Date(date)
-    const soldDateAndTime = `${dateAndTime.getDate()}/${dateAndTime.getMonth() + 1}/${dateAndTime.getFullYear()} 
-    [${dateAndTime.getHours()}h-${dateAndTime.getMinutes()}m-${dateAndTime.getSeconds()}s]`
+    const soldDateAndTime = format(dateAndTime, 'dd/MM/yyyy [hh:mm:ss a]')
 
     return (
         <tr id={_id}>
@@ -23,7 +25,7 @@ const SoldTableRowData = ({
             <td>{per_price}</td>
             <td>{total_price}</td>
             {profit
-                && <td className={profit >= 0 ? "text-success" : "text-bg-danger"}>{profit}</td>
+                && <td className={profit >= 0 ? "text-success" : "text-bg-danger"}><b>{profit}</b></td>
             }
             <td>{barcode}</td>
             <td>{sale_id}</td>
