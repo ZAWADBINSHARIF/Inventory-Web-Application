@@ -1,7 +1,9 @@
 const PurchaseTableBodyData = ({
     itemIndex,
     _id,
+    barcode,
     product_name,
+    brand,
     quantity,
     per_price,
     total_price,
@@ -12,11 +14,12 @@ const PurchaseTableBodyData = ({
 
     const dateFormat = `${purchaseDate.getDate()}/${purchaseDate.getMonth() + 1}/${purchaseDate.getFullYear()}`
 
-
     return (
         <tr id={_id}>
             <td>{itemIndex + 1}</td>
+            <td>{barcode}</td>
             <td>{product_name}</td>
+            <td>{brand}</td>
             <td>{quantity}</td>
             <td>{per_price}</td>
             <td>{total_price}</td>

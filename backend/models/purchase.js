@@ -3,25 +3,33 @@ import mongoose from "mongoose";
 
 const purchaseSchema = mongoose.Schema(
     {
+        barcode: {
+            type: String,
+            required: true
+        },
         product_name: {
             type: String,
-            require: true
+            required: true
+        },
+        brand: {
+            type: String,
+            required: true
         },
         quantity: {
             type: Number,
-            require: true
+            required: true
         },
         per_price: {
             type: Number,
-            require: true
+            required: true
         },
         total_price: {
             type: Number,
-            require: true
+            required: true
         },
         date: {
             type: Date,
-            require: true
+            required: true
         },
         product: {
             type: mongoose.Schema.Types.ObjectId,

@@ -39,8 +39,8 @@ function App() {
         }
       </section>
 
-      <section className="section-2 min-vh-100 overflow-y-scroll p-md-5 px-1">
-        <Header />
+      <section className="section-2 min-vh-100 overflow-y-scroll py-5 px-md-5">
+        {/* <Header /> */}
         <Outlet />
       </section>
 

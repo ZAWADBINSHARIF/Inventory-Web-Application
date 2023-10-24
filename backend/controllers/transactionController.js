@@ -13,7 +13,7 @@ import Sale from '../models/sale.js'
 // ** route GET /transaction/purchase
 // ** @access Public
 export const getAllPurchases = expressAsyncHandler(async (_req, res) => {
-    const allPurchases = await Purchase.find().sort({ date: -1 }).exec()
+    const allPurchases = await Purchase.find().sort({ createdAt: -1 }).exec()
 
     res.json(allPurchases)
 })
@@ -39,6 +39,7 @@ export const addPurchase = expressAsyncHandler(async (req, res) => {
         {
             barcode: findProduct.barcode,
             product_name: findProduct.product_name,
+            brand: findProduct.brand,
             quantity: req.body.quantity,
             per_price: req.body.per_price,
             total_price: parseFloat(req.body.quantity) * parseFloat(req.body.per_price),
@@ -70,7 +71,7 @@ export const addPurchase = expressAsyncHandler(async (req, res) => {
 // ** route GET /transaction/sale
 // ** @access Public
 export const getAllSales = expressAsyncHandler(async (_req, res) => {
-    const allSales = await Sale.find().sort({createdAt: -1}).exec()
+    const allSales = await Sale.find().sort({ createdAt: -1 }).exec()
 
     res.json(allSales)
 })
@@ -89,6 +90,7 @@ export const addSale = expressAsyncHandler(async (req, res) => {
                 sale_id,
                 barcode: product.barcode,
                 product_name: product.product_name,
+                brand: product.brand,
                 quantity: product.quantity,
                 per_price: product.per_price,
                 per_purchase_price: product.per_purchase_price,

@@ -5,35 +5,39 @@ const saleSchema = mongoose.Schema(
     {
         sale_id: {
             type: String,
-            require: true,
+            required: true,
         },
         barcode: {
             type: String,
-            require: true
+            required: true
         },
         product_name: {
             type: String,
-            require: true
+            required: true
+        },
+        brand: {
+            type: String,
+            required: true
         },
         quantity: {
             type: Number,
-            require: true
+            required: true
         },
         per_price: {
             type: Number,
-            require: true
+            required: true
         },
         per_purchase_price: {
             type: Number,
-            require: true
+            required: true
         },
         total_price: {
             type: Number,
-            require: true
+            required: true
         },
         profit: {
             type: Number,
-            require: true
+            required: true
         },
         product_info: {
             type: mongoose.Schema.Types.ObjectId,

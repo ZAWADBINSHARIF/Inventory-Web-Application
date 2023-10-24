@@ -16,14 +16,18 @@ const SaleProductCart = () => {
 
     const handleSaleProducts = (e) => {
         e.preventDefault()
+
         dispatch(saleProductsThunk())
+        
         if (status === STATUS.ERROR) {
             toast.error("Something went wrong")
         } else {
             toast.success("Products have been sold")
         }
+        
         dispatch(fetchProducts())
         dispatch(fetchSoldProductsThunk())
+        console.log("update")
     }
 
     return (

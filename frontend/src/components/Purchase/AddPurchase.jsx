@@ -49,9 +49,10 @@ const AddPurchase = ({ dangerNotify, successNotify }) => {
 
     function handleInsertValueInput(product) {
         const value = {
-            _id:product._id,
+            _id: product._id,
             barcode: product.barcode,
             product_name: product.product_name,
+            brand: product.brand,
             per_price: product.purchase_price,
             quantity: formData.quantity,
             total_price: product.purchase_price * formData.quantity || 0,
@@ -66,7 +67,7 @@ const AddPurchase = ({ dangerNotify, successNotify }) => {
         e.preventDefault()
 
         e.target.disabled = true
-        console.log(formData)
+
         axios.post('/transaction/purchase', {
             ...formData
         }).then(response => {
@@ -142,7 +143,7 @@ const AddPurchase = ({ dangerNotify, successNotify }) => {
                 <Col xs={12} sm={12} md={4} lg={3} xl>
                     <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                         <Form.Label>Total price</Form.Label>
-                        <Form.Control type="date" name="date" min={'2010-01-01'}  value={formData.date} onChange={handleInput} />
+                        <Form.Control type="date" name="date" min={'2010-01-01'} value={formData.date} onChange={handleInput} />
                     </Form.Group>
                 </Col>
             </Row>

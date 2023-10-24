@@ -4,11 +4,17 @@ import expressAsyncHandler from 'express-async-handler'
 // internal import
 import Product from '../models/product.js'
 
+// ** @desc Get All Products
+// ** route GET /product
+// ** @access Public
 export const getProducts = expressAsyncHandler(async (req, res) => {
     const products = await Product.find().sort({ createdAt: -1 }).exec()
     res.status(200).json(products)
 })
 
+// ** @desc Add Product
+// ** route POST /product
+// ** @access Public
 export const addProduct = expressAsyncHandler(async (req, res) => {
 
     const newProduct = await new Product({
@@ -33,7 +39,10 @@ export const addProduct = expressAsyncHandler(async (req, res) => {
     }
 })
 
-export const removeProduct = expressAsyncHandler(async (req, res) => { 
+// ** @desc Remove Product
+// ** route DELETE /product
+// ** @access Public
+export const removeProduct = expressAsyncHandler(async (req, res) => {
     const product = await Product.findByIdAndDelete(req.body.productID)
     res.status(200).json(product)
 })

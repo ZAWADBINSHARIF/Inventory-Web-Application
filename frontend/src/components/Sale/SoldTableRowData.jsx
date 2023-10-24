@@ -5,6 +5,7 @@ const SoldTableRowData = ({
     _id,
     index,
     product_name,
+    brand,
     quantity,
     per_price,
     total_price,
@@ -21,6 +22,7 @@ const SoldTableRowData = ({
         <tr id={_id}>
             <td>{index + 1}</td>
             <td>{product_name}</td>
+            <td>{brand}</td>
             <td>{quantity}</td>
             <td>{per_price}</td>
             <td>{total_price}</td>

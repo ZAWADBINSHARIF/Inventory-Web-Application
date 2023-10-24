@@ -1,24 +1,40 @@
 // external import
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { Table } from "react-bootstrap"
 
 // internal import
-import { fetchProducts } from "../../redux/productSlice"
+import { fetchProducts, setProducts } from "../../redux/productSlice"
 import ProductTableData from "./ProductTableData"
+import SearchAndFilter from "../SearchBarAndFilter/SearchAndFilter"
 
 const ProductTable = ({ dangerNotify }) => {
 
   const dispatch = useDispatch()
   const products = useSelector(state => state.products.data)
 
+  const [searchResult, setSearchResult] = useState(products)
+
+
   useEffect(() => {
     dispatch(fetchProducts())
   }, [dispatch])
 
+  useEffect(() => {
+    setSearchResult(products)
+  }, [products])
+
   return (
     <div className="ProductTable pt-5">
-      <p className='text-primary fs-3'>Products Add History</p>
+      <div className="headingDiv d-flex flex-row justify-content-between">
+        <p className='text-primary fs-3'>Products Add History</p>
+
+        <SearchAndFilter
+          products={products}
+          setSearchResult={setSearchResult}
+        />
+
+      </div>
 
       <div className="table">
 
@@ -38,7 +54,7 @@ const ProductTable = ({ dangerNotify }) => {
           </thead>
           <tbody>
 
-            {products.map((product, index) => (
+            {searchResult.map((product, index) => (
 
               <ProductTableData
                 key={index}
