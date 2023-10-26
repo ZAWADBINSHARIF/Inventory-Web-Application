@@ -2,8 +2,8 @@
 import { Row, Col } from "react-bootstrap"
 
 // internal import
-import ProductSaleForm from "../components/Sale/ProductSaleForm"
-import SaleProductCart from "../components/Sale/SaleProductCart"
+import ProductSaleForm from "../components/Sale/Left/ProductSaleForm"
+import SaleProductCart from "../components/Sale/Right/SaleProductCart"
 import SoldTable from "../components/Sale/SoldTable"
 
 const Sale = () => {

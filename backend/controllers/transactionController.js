@@ -1,6 +1,7 @@
 // external import
 import expressAsyncHandler from 'express-async-handler'
 import crypto from 'crypto'
+import { match } from 'assert'
 
 // internal import
 import Purchase from '../models/purchase.js'
@@ -70,10 +71,23 @@ export const addPurchase = expressAsyncHandler(async (req, res) => {
 // ** @desc get Sold products
 // ** route GET /transaction/sale
 // ** @access Public
-export const getAllSales = expressAsyncHandler(async (_req, res) => {
-    const allSales = await Sale.find().sort({ createdAt: -1 }).exec()
+export const getAllSales = expressAsyncHandler(async (req, res) => {
+    const { fromDate, toDate } = req.params
 
-    res.json(allSales)
+    const start = new Date(fromDate)
+    const end = new Date(toDate)
+    end.setHours(23)
+    end.setMinutes(59)
+    end.setSeconds(59)
+
+    if (fromDate && toDate) {
+        const allSoldData = await Sale.find({ createdAt: { $gte: start.toISOString(), $lte: end.toISOString() } }).sort({ createdAt: -1 }).exec()
+        res.json(allSoldData)
+    }
+    else {
+        const allSales = await Sale.find().sort({ createdAt: -1 }).exec()
+        res.json(allSales)
+    }
 })
 
 // ** @desc Add sale products

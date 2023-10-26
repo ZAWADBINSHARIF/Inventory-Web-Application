@@ -4,30 +4,31 @@ import { Table, Button } from "react-bootstrap"
 
 // internal import
 import SaleProductCartTableRow from "./SaleProductCartTableRow"
-import { fetchProducts } from '../../redux/productSlice'
-import { fetchSoldProductsThunk, saleProductsThunk } from "../../redux/saleSlice"
-import { STATUS } from '../../redux/saleSlice'
+import { fetchProducts } from '../../../redux/productSlice'
+import { fetchSoldProductsThunk, saleProductsThunk } from "../../../redux/saleSlice"
+import { STATUS } from '../../../redux/saleSlice'
 import { toast } from "react-toastify"
+import useDefaultDate from "../../../customs/hooks/useDefaultDate"
 
 const SaleProductCart = () => {
 
     const { saleProductsList, status } = useSelector(state => state.sales)
     const dispatch = useDispatch()
+    const [fromDate, toDate] = useDefaultDate()
 
     const handleSaleProducts = (e) => {
         e.preventDefault()
 
         dispatch(saleProductsThunk())
-        
+
         if (status === STATUS.ERROR) {
             toast.error("Something went wrong")
         } else {
             toast.success("Products have been sold")
         }
-        
+
         dispatch(fetchProducts())
-        dispatch(fetchSoldProductsThunk())
-        console.log("update")
+        dispatch(fetchSoldProductsThunk({ fromDate, toDate }))
     }
 
     return (

@@ -32,6 +32,7 @@ const ProductTable = ({ dangerNotify }) => {
         <SearchAndFilter
           products={products}
           setSearchResult={setSearchResult}
+          disableDateFilter={true}
         />
 
       </div>

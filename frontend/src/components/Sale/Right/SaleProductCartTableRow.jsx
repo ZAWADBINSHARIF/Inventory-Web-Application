@@ -3,7 +3,7 @@ import { MdDelete } from 'react-icons/md'
 
 // internal import 
 import { useDispatch } from "react-redux"
-import { removeSaleProductsListItem } from "../../redux/saleSlice"
+import { removeSaleProductsListItem } from "../../../redux/saleSlice"
 
 const SaleProductCartTableRow = ({
   product_info,

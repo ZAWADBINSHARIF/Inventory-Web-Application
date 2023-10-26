@@ -4,19 +4,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Table } from "react-bootstrap"
 
 // internal import
-import { fetchSoldProductsThunk } from "../../redux/saleSlice"
+import { STATUS, fetchSoldProductsThunk } from "../../redux/saleSlice"
 import SoldTableRowData from "./SoldTableRowData"
 import SearchAndFilter from "../SearchBarAndFilter/SearchAndFilter"
 
 const SoldTable = () => {
 
-    const soldProducts = useSelector(state => state.sales.soldProducts)
-    const dispatch = useDispatch()
+    const { soldProducts, status } = useSelector(state => state.sales)
     const [searchResult, setSearchResult] = useState(soldProducts)
-
-    useEffect(() => {
-        dispatch(fetchSoldProductsThunk())
-    }, [dispatch])
 
     useEffect(() => {
         setSearchResult(soldProducts)
@@ -31,6 +26,7 @@ const SoldTable = () => {
                 <SearchAndFilter
                     products={soldProducts}
                     setSearchResult={setSearchResult}
+                    fetchProdcuts={fetchSoldProductsThunk}
                 />
 
             </div>
@@ -51,27 +47,36 @@ const SoldTable = () => {
                         <th>Date & Time</th>
                     </tr>
                 </thead>
-                <tbody>
 
-                    {searchResult.map((item, index) => (
-                        <SoldTableRowData
-                            key={index}
-                            _id={item._id}
-                            index={index}
-                            product_name={item.product_name}
-                            brand={item.brand}
-                            quantity={item.quantity}
-                            per_price={item.per_price}
-                            total_price={item.total_price}
-                            profit={item.profit}
-                            date={item.createdAt}
-                            barcode={item.barcode}
-                            sale_id={item.sale_id}
-                        />
-                    ))}
+                {status === STATUS.IDLE &&
+                    <tbody>
+                        {
+                            searchResult.map((item, index) => (
+                                <SoldTableRowData
+                                    key={index}
+                                    _id={item._id}
+                                    index={index}
+                                    product_name={item.product_name}
+                                    brand={item.brand}
+                                    quantity={item.quantity}
+                                    per_price={item.per_price}
+                                    total_price={item.total_price}
+                                    profit={item.profit}
+                                    date={item.createdAt}
+                                    barcode={item.barcode}
+                                    sale_id={item.sale_id}
+                                />
+                            ))
+                        }
+                    </tbody>
+                }
+                {status === STATUS.LOADING && 
+                    <tbody>
+                        <h3>Loading...</h3>
                 </tbody>
+                }
             </Table>
-        </div>
+        </div >
     )
 }
 export default SoldTable

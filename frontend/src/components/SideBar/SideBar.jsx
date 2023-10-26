@@ -5,10 +5,10 @@ const SideBar = () => {
     return (
         <div className="SideBar min-vh-100 bg-primary text-white">
             <div className="SideBarHeading">
-                <p>Inventory</p>
-                <hr className="bg-primary"/>
+                <p >Inventory</p>
+                <hr className="bg-primary" />
             </div>
-            <SideList/>
+            <SideList />
         </div>
     )
 }

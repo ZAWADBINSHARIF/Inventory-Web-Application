@@ -5,7 +5,7 @@ import { Nav } from 'react-bootstrap'
 const SideListItem = ({ item }) => {
 
     return (
-        <div className="SideListItem">
+        <div className="SideListItem w-100">
 
             <LinkContainer to={item.link}>
                 <Nav.Link>

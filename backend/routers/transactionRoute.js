@@ -18,8 +18,7 @@ router.route('/purchase')
     .post(purchaseInputValidation, addPurchaseValidationHandler, addPurchase)
 
 // ** product sale route
-router.route('/sale')
-    .get(getAllSales)
-    .post(addSale)
+router.get('/sale/:fromDate/:toDate', getAllSales)
+router.post('/sale', addSale)
 
 export default router

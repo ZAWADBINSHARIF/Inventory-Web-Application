@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 // internal import
-import SuggestionTable from '../SuggestionTable/SuggestionTable.jsx'
-import { fetchProducts } from '../../redux/productSlice.js'
-import { setSaleProductsListItem } from '../../redux/saleSlice.js'
-import { STATUS } from '../../redux/saleSlice.js'
+import SuggestionTable from '../../SuggestionTable/SuggestionTable.jsx'
+import { fetchProducts } from '../../../redux/productSlice.js'
+import { setSaleProductsListItem } from '../../../redux/saleSlice.js'
+import { STATUS } from '../../../redux/saleSlice.js'
 
 const ProductSaleForm = () => {
 

@@ -17,12 +17,15 @@ const SearchBar = ({ products, setSearchResult }) => {
     }
 
     return (
-        <Form.Control
-            type="text"
-            placeholder="Search"
-            className=" mr-sm-2 mb-3"
-            onChange={handleSearch}
-        />
+        <Form onSubmit={(e)=> e.preventDefault()}>
+            <Form.Label>Search</Form.Label>
+            <Form.Control
+                type="text"
+                placeholder="Search"
+                className=" mr-sm-2 mb-3"
+                onChange={handleSearch}
+            />
+        </Form>
     )
 }
 export default SearchBar

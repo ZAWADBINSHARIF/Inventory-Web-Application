@@ -1,14 +1,20 @@
+// external import
 import { Nav, Navbar } from "react-bootstrap"
 
 const Header = () => {
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
-        <Nav className="ms-auto flex-sm-colum flex-row">
-          <Nav.Link href="#link" className="pe-md-5 pe-2 text-primary"><b>Purchase: 99999 Tk</b></Nav.Link>
-          <Nav.Link href="#link" className="pe-md-5 pe-2 text-success"><b>Sale: 99999 Tk</b></Nav.Link>
-          <Nav.Link href="#link" className="pe-md-5 pe-2 text-danger"><b>Out of stock: 24</b></Nav.Link>
-          </Nav>
+    <Navbar bg="light" data-bs-theme="light" className="py-4">
+
+      <Navbar.Brand className="fw-bold text-secondary">
+        User Name
+      </Navbar.Brand>
+      <Nav className="ms-auto">
+        <Nav.Link href="#home" className='text-primary fw-bold'>Purchase: 578968</Nav.Link>
+        <Nav.Link href="#features" className='text-success fw-bold'>Sale: 98754</Nav.Link>
+        <Nav.Link href="#pricing" className='text-danger fw-bold'>Out of stock: 25</Nav.Link>
+      </Nav>
+
     </Navbar>
   )
 }
