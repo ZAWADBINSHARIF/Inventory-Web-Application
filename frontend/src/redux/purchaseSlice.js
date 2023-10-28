@@ -11,12 +11,16 @@ export const STATUS = Object.freeze({
 const purchaseSlice = createSlice({
     name: 'purchase',
     initialState: {
-        data: [{}],
+        allPurchase: [{}],
+        totalPurchaseAmount: 0,
         status: STATUS.IDLE,
     },
     reducers: {
-        setPurchase(state, action) {
-            state.data = action.payload
+        setAllPurchase(state, action) {
+            state.allPurchase = action.payload
+        },
+        setTotalPurchaseAmount(state, action) {
+            state.totalPurchaseAmount = action.payload
         },
         setStatus(state, action) {
             state.status = action.payload
@@ -24,20 +28,21 @@ const purchaseSlice = createSlice({
     }
 })
 
-export const { setPurchase, setStatus } = purchaseSlice.actions
+export const { setAllPurchase, setStatus, setTotalPurchaseAmount } = purchaseSlice.actions
 export default purchaseSlice.reducer
 
-export function fetchPurchases() {
-    return async function (dispatch, getSate) {
+export function fetchPurchases({ fromDate, toDate }) {
+    return async function (dispatch) {
+
         dispatch(setStatus(STATUS.LOADING))
 
-        axios.get('/transaction/purchase')
+        axios.get(`/transaction/purchase/${fromDate}/${toDate}`)
             .then(response => {
-                dispatch(setPurchase(response.data))
+                dispatch(setAllPurchase(response.data.allPurchaseData))
+                dispatch(setTotalPurchaseAmount(response.data.total))
                 dispatch(setStatus(STATUS.IDLE))
             }).catch(error => {
                 console.log(error)
-                console.log(error.response.data)
                 dispatch(setStatus(STATUS.ERROR))
             })
     }

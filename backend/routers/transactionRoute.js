@@ -13,7 +13,7 @@ import { addPurchaseValidationHandler, purchaseInputValidation } from "../middle
 const router = express.Router()
 
 // ** product purchase route
-router.route('/purchase')
+router.route('/purchase/:fromDate/:toDate')
     .get(getAllPurchases)
     .post(purchaseInputValidation, addPurchaseValidationHandler, addPurchase)
 

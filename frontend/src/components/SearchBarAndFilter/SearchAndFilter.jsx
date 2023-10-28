@@ -1,16 +1,14 @@
 // external import
 import { Fragment, useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import { Row, Col, Form, Button } from "react-bootstrap"
 
 // internal import
 import SearchBar from "./SearchBar"
 import useDefaultDate from "../../customs/hooks/useDefaultDate"
 
-const SearchAndFilter = ({ products, setSearchResult, fetchProdcuts, disableDateFilter }) => {
+const SearchAndFilter = ({ products, setSearchResult, fetchProdcuts, totalAmount, disableDateFilter }) => {
     const dispatch = useDispatch()
-    const { totalPurchaseAmount } = useSelector(state => state.sales)
-
 
     const [from, to] = useDefaultDate()
 
@@ -29,7 +27,6 @@ const SearchAndFilter = ({ products, setSearchResult, fetchProdcuts, disableDate
     const handleClear = () => {
         setFromDate(from)
         setToDate(to)
-        console.log("Clear")
     }
 
     useEffect(() => {
@@ -79,7 +76,7 @@ const SearchAndFilter = ({ products, setSearchResult, fetchProdcuts, disableDate
                     <Col>
                         <div className="w-100 h-100 d-flex justify-content-center align-items-center fw-bold">
                             <Fragment>
-                            Total: {totalPurchaseAmount}tk
+                                Total: {totalAmount} Tk
                             </Fragment>
                         </div>
                     </Col>

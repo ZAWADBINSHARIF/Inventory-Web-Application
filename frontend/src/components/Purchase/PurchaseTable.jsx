@@ -1,29 +1,21 @@
 // external import
 import { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 // internal import
-import { fetchPurchases } from '../../redux/purchaseSlice'
+import { fetchPurchases, STATUS } from '../../redux/purchaseSlice'
 import PurchaseTableBodyData from './purchaseTableBodyData'
 import SearchAndFilter from '../SearchBarAndFilter/SearchAndFilter'
 
 const PurchaseTable = () => {
 
-    const purchases = useSelector(state => state.purchases.data)
-    const dispatch = useDispatch()
-
-    const [searchResult, setSearchResult] = useState(purchases)
-
-    // console.log(purchases)
+    const { allPurchase, status, totalPurchaseAmount } = useSelector(state => state.purchases)
+    const [searchResult, setSearchResult] = useState(allPurchase)
 
     useEffect(() => {
-        dispatch(fetchPurchases())
-    }, [dispatch])
-
-    useEffect(() => {
-        setSearchResult(purchases)
-    }, [purchases])
+        setSearchResult(allPurchase)
+    }, [allPurchase])
 
     return (
         <div className='PurchaseTable pt-5'>
@@ -31,8 +23,10 @@ const PurchaseTable = () => {
                 <p className='text-primary fs-3'>Purchases History</p>
 
                 <SearchAndFilter
-                    products={purchases}
+                    products={allPurchase}
                     setSearchResult={setSearchResult}
+                    fetchProdcuts={fetchPurchases}
+                    totalAmount={totalPurchaseAmount}
                 />
 
             </div>
@@ -49,24 +43,37 @@ const PurchaseTable = () => {
                         <th>Date</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {searchResult.map((item, index) => (
-                        <PurchaseTableBodyData
-                            key={index}
-                            itemIndex={index}
-                            _id={item._id}
-                            barcode={item.barcode}
-                            product_name={item.product_name}
-                            brand={item.brand}
-                            quantity={item.quantity}
-                            per_price={item.per_price}
-                            total_price={item.total_price}
-                            date={item.date}
-                        />
-                    ))}
-                </tbody>
+                {status === STATUS.IDLE &&
+                    <tbody>
+                        {
+                            searchResult.map((item, index) => (
+                                <PurchaseTableBodyData
+                                    key={index}
+                                    itemIndex={index}
+                                    _id={item._id}
+                                    barcode={item.barcode}
+                                    product_name={item.product_name}
+                                    brand={item.brand}
+                                    quantity={item.quantity}
+                                    per_price={item.per_price}
+                                    total_price={item.total_price}
+                                    date={item.date}
+                                />
+                            ))
+                        }
+                    </tbody>
+                }
+                {status === STATUS.LOADING &&
+                    <tbody>
+                        <tr>
+                            <td>
+                                <h3>Loading...</h3>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
             </Table>
-        </div>
+        </div >
     )
 }
 export default PurchaseTable

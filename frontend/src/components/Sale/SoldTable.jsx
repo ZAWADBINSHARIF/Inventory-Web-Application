@@ -1,6 +1,6 @@
 // external import
 import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Table } from "react-bootstrap"
 
 // internal import
@@ -10,7 +10,7 @@ import SearchAndFilter from "../SearchBarAndFilter/SearchAndFilter"
 
 const SoldTable = () => {
 
-    const { soldProducts, status } = useSelector(state => state.sales)
+    const { soldProducts, status, totalSoldAmount } = useSelector(state => state.sales)
     const [searchResult, setSearchResult] = useState(soldProducts)
 
     useEffect(() => {
@@ -27,6 +27,7 @@ const SoldTable = () => {
                     products={soldProducts}
                     setSearchResult={setSearchResult}
                     fetchProdcuts={fetchSoldProductsThunk}
+                    totalAmount={totalSoldAmount}
                 />
 
             </div>
@@ -70,10 +71,14 @@ const SoldTable = () => {
                         }
                     </tbody>
                 }
-                {status === STATUS.LOADING && 
+                {status === STATUS.LOADING &&
                     <tbody>
-                        <h3>Loading...</h3>
-                </tbody>
+                        <tr>
+                            <td>
+                                <h3>Loading...</h3>
+                            </td>
+                        </tr>
+                    </tbody>
                 }
             </Table>
         </div >

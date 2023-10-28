@@ -11,12 +11,47 @@ import Sale from '../models/sale.js'
 // ? ===================== purchase api =======================
 
 // ** @desc Get Purchase product
-// ** route GET /transaction/purchase
+// ** route GET /transaction/purchase/:fromDate/:toDate
 // ** @access Public
-export const getAllPurchases = expressAsyncHandler(async (_req, res) => {
-    const allPurchases = await Purchase.find().sort({ createdAt: -1 }).exec()
+export const getAllPurchases = expressAsyncHandler(async (req, res) => {
 
-    res.json(allPurchases)
+    const { fromDate, toDate } = req.params
+
+    const start = new Date(fromDate)
+    const end = new Date(toDate)
+    end.setHours(23)
+    end.setMinutes(59)
+    end.setSeconds(59)
+
+    if (fromDate && toDate) {
+        try {
+            const allPurchaseData = await Purchase.find({ createdAt: { $gte: start.toISOString(), $lte: end.toISOString() } }).sort({ createdAt: -1 }).exec()
+
+            const total = await Purchase.aggregate([
+                {
+                    $match: {
+                        createdAt: {
+                            $gte: start, // Don't use ISOString 
+                            $lte: end // Don't use ISOString 
+                        }
+                    }
+                },
+                {
+                    $group: {
+                        _id: null,
+                        totalPurchaseAmount: { $sum: '$total_price' }
+                    }
+                }
+            ])
+
+
+            res.json({ allPurchaseData, total: total[0]?.totalPurchaseAmount || 0 })
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 })
 
 // ** @desc Add Purchase product
@@ -81,12 +116,32 @@ export const getAllSales = expressAsyncHandler(async (req, res) => {
     end.setSeconds(59)
 
     if (fromDate && toDate) {
-        const allSoldData = await Sale.find({ createdAt: { $gte: start.toISOString(), $lte: end.toISOString() } }).sort({ createdAt: -1 }).exec()
-        res.json(allSoldData)
-    }
-    else {
-        const allSales = await Sale.find().sort({ createdAt: -1 }).exec()
-        res.json(allSales)
+        try {
+            const allSoldData = await Sale.find({ createdAt: { $gte: start.toISOString(), $lte: end.toISOString() } }).sort({ createdAt: -1 }).exec()
+
+            const total = await Sale.aggregate([
+                {
+                    $match: {
+                        createdAt: {
+                            $gte: start, // Don't use ISOString 
+                            $lte: end // Don't use ISOString 
+                        }
+                    }
+                },
+                {
+                    $group: {
+                        _id: null,
+                        totalSoldAmount: { $sum: '$total_price' }
+                    }
+                }
+            ])
+
+
+            res.json({ allSoldData, total: total[0]?.totalSoldAmount || 0 })
+
+        } catch (error) {
+            console.log(error)
+        }
     }
 })
 

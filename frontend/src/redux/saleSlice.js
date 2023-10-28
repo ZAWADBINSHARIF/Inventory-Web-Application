@@ -12,15 +12,15 @@ const saleSlice = createSlice({
     initialState: {
         soldProducts: [],
         saleProductsList: [],
-        totalPurchaseAmount: 0,
+        totalSoldAmount: 0,
         status: STATUS.IDLE
     },
     reducers: {
         setStatus(state, action) {
             state.status = action.payload
         },
-        setTotalPurchaseAmount(state, action) {
-            state.totalPurchaseAmount = action.payload
+        setTotalSoldAmount(state, action) {
+            state.totalSoldAmount = action.payload
         },
         setSoldProducts(state, action) {
             state.soldProducts = action.payload
@@ -55,26 +55,19 @@ const saleSlice = createSlice({
     }
 })
 
-export const { setSoldProducts, setSaleProductsListItem, removeSaleProductsListItem, setStatus, setEmptySaleProductsList, setTotalPurchaseAmount } = saleSlice.actions
+export const { setSoldProducts, setSaleProductsListItem, removeSaleProductsListItem, setStatus, setEmptySaleProductsList, setTotalSoldAmount } = saleSlice.actions
 export default saleSlice.reducer
 
 export function fetchSoldProductsThunk({ fromDate, toDate }) {
-    return async function (dispatch, getState) {
+    return async function (dispatch) {
         try {
-            console.log(fromDate, " ", toDate)
+
             dispatch(setStatus(STATUS.LOADING))
+
             const response = await axios.get(`/transaction/sale/${fromDate}/${toDate}`)
-            console.log(response.data + " " + "data")
-            dispatch(setSoldProducts(response.data))
 
-            let count = 0
-            const soldProducts = getState().sales.soldProducts
-
-            soldProducts.map(item => {
-                count += item.total_price
-            })
-
-            dispatch(setTotalPurchaseAmount(count))
+            dispatch(setSoldProducts(response.data.allSoldData))
+            dispatch(setTotalSoldAmount(response.data.total))
             dispatch(setStatus(STATUS.IDLE))
 
         } catch (error) {
