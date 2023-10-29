@@ -7,7 +7,7 @@ import { Row, Col, Form, Button } from "react-bootstrap"
 import SearchBar from "./SearchBar"
 import useDefaultDate from "../../customs/hooks/useDefaultDate"
 
-const SearchAndFilter = ({ products, setSearchResult, fetchProdcuts, totalAmount, disableDateFilter }) => {
+const SearchAndFilter = ({ products, setSearchResult, fetchProdcuts, totalAmount, totalProfit, disableDateFilter }) => {
     const dispatch = useDispatch()
 
     const [from, to] = useDefaultDate()
@@ -73,6 +73,15 @@ const SearchAndFilter = ({ products, setSearchResult, fetchProdcuts, totalAmount
                             </Form.Group>
                         </Form>
                     </Col>
+                    {totalProfit &&
+                        <Col>
+                            <div className="w-100 h-100 d-flex justify-content-center align-items-center fw-bold">
+                                <Fragment>
+                                    Profit: {totalProfit} Tk
+                                </Fragment>
+                            </div>
+                        </Col>
+                    }
                     <Col>
                         <div className="w-100 h-100 d-flex justify-content-center align-items-center fw-bold">
                             <Fragment>

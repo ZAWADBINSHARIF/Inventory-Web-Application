@@ -10,7 +10,7 @@ import SearchAndFilter from "../SearchBarAndFilter/SearchAndFilter"
 
 const SoldTable = () => {
 
-    const { soldProducts, status, totalSoldAmount } = useSelector(state => state.sales)
+    const { soldProducts, status, totalSoldAmount, totalProfit } = useSelector(state => state.sales)
     const [searchResult, setSearchResult] = useState(soldProducts)
 
     useEffect(() => {
@@ -28,6 +28,7 @@ const SoldTable = () => {
                     setSearchResult={setSearchResult}
                     fetchProdcuts={fetchSoldProductsThunk}
                     totalAmount={totalSoldAmount}
+                    totalProfit={totalProfit}
                 />
 
             </div>

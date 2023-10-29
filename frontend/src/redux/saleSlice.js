@@ -13,6 +13,7 @@ const saleSlice = createSlice({
         soldProducts: [],
         saleProductsList: [],
         totalSoldAmount: 0,
+        totalProfit: 0,
         status: STATUS.IDLE
     },
     reducers: {
@@ -21,6 +22,9 @@ const saleSlice = createSlice({
         },
         setTotalSoldAmount(state, action) {
             state.totalSoldAmount = action.payload
+        },
+        setTotalProfit(state, action) {
+            state.totalProfit = action.payload
         },
         setSoldProducts(state, action) {
             state.soldProducts = action.payload
@@ -55,7 +59,14 @@ const saleSlice = createSlice({
     }
 })
 
-export const { setSoldProducts, setSaleProductsListItem, removeSaleProductsListItem, setStatus, setEmptySaleProductsList, setTotalSoldAmount } = saleSlice.actions
+export const {
+    setSoldProducts,
+    setSaleProductsListItem,
+    removeSaleProductsListItem,
+    setStatus,
+    setEmptySaleProductsList,
+    setTotalSoldAmount,
+    setTotalProfit } = saleSlice.actions
 export default saleSlice.reducer
 
 export function fetchSoldProductsThunk({ fromDate, toDate }) {
@@ -67,7 +78,8 @@ export function fetchSoldProductsThunk({ fromDate, toDate }) {
             const response = await axios.get(`/transaction/sale/${fromDate}/${toDate}`)
 
             dispatch(setSoldProducts(response.data.allSoldData))
-            dispatch(setTotalSoldAmount(response.data.total))
+            dispatch(setTotalSoldAmount(response.data.totalSoldAmount))
+            dispatch(setTotalProfit(response.data.totalProfit))
             dispatch(setStatus(STATUS.IDLE))
 
         } catch (error) {

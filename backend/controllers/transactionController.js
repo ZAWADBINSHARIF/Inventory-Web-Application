@@ -131,13 +131,14 @@ export const getAllSales = expressAsyncHandler(async (req, res) => {
                 {
                     $group: {
                         _id: null,
-                        totalSoldAmount: { $sum: '$total_price' }
+                        totalSoldAmount: { $sum: '$total_price' },
+                        totalProfit: { $sum: '$profit' }
                     }
                 }
             ])
 
-
-            res.json({ allSoldData, total: total[0]?.totalSoldAmount || 0 })
+            console.log(total[0])
+            res.json({ allSoldData, totalSoldAmount: total[0]?.totalSoldAmount || 0, totalProfit: total[0]?.totalProfit || 0 })
 
         } catch (error) {
             console.log(error)
