@@ -32,7 +32,7 @@ export const { setProducts, setStatus, setMessage } = productSlice.actions
 export default productSlice.reducer
 
 export function fetchProducts() {
-    return async function (dispatch, getSate) {
+    return async function (dispatch) {
         dispatch(setStatus(STATUS.LOADING))
 
         axios.get('/product')
@@ -48,7 +48,7 @@ export function fetchProducts() {
 }
 
 export function removeProduct(productID) {
-    return async function (dispatch, getSate) {
+    return async function (dispatch) {
         axios.delete('/product', {
             data: {
                 productID: productID

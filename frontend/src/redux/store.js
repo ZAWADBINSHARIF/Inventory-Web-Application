@@ -5,12 +5,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import productSlice from "./productSlice.js";
 import purchaseSlice from "./purchaseSlice.js";
 import saleSlice from "./saleSlice.js";
+import headerSlice from "./headerSlice.js";
 
 const store = configureStore({
     reducer: {
         products: productSlice,
         purchases: purchaseSlice,
-        sales: saleSlice
+        sales: saleSlice,
+        header: headerSlice
     }
 })
 

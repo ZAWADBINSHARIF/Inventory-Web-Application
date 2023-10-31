@@ -25,6 +25,7 @@ const ProductTableData = (product) => {
             <td>{product.brand}</td>
             <td>{product.description}</td>
             <td>{product.quantity}</td>
+            <td>{product.stock_limit}</td>
             <td>{product.purchase_price}</td>
             <td>{product.sale_price}</td>
             <td>{product.barcode}</td>

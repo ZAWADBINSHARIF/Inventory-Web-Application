@@ -47,6 +47,7 @@ const ProductTable = ({ dangerNotify }) => {
               <th>Brand</th>
               <th>Description</th>
               <th>Quantity</th>
+              <th>Stock limit alert</th>
               <th>Purchase Price</th>
               <th>Sale price</th>
               <th>Bar Code</th>
@@ -64,6 +65,7 @@ const ProductTable = ({ dangerNotify }) => {
                 name={product.product_name}
                 brand={product.brand}
                 description={product.description}
+                stock_limit = {product.stock_limit}
                 quantity={product.quantity}
                 purchase_price={product.purchase_price}
                 sale_price={product.sale_price}

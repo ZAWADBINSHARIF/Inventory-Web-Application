@@ -1,7 +1,6 @@
 // external import
 import expressAsyncHandler from 'express-async-handler'
 import crypto from 'crypto'
-import { match } from 'assert'
 
 // internal import
 import Purchase from '../models/purchase.js'
@@ -9,6 +8,41 @@ import Product from '../models/product.js'
 import Sale from '../models/sale.js'
 
 // ? ===================== purchase api =======================
+
+// ** @desc Get This Month total Purchase products
+// ** route GET /transaction/purchase/this_month/:fromDate/:toDate
+// ** @access Public
+export const getThisMonthPurchaseAmount = expressAsyncHandler(async (req, res) => {
+
+    const { fromDate, toDate } = req.params
+
+    if (!fromDate || !toDate) return res.status(400).json('fromDate and toDate are missing!')
+
+    const start = new Date(fromDate)
+    const end = new Date(toDate)
+    end.setHours(23)
+    end.setMinutes(59)
+    end.setSeconds(59)
+
+    const total = await Purchase.aggregate([
+        {
+            $match: {
+                createdAt: {
+                    $gte: start, // Don't use ISOString 
+                    $lte: end // Don't use ISOString 
+                }
+            }
+        },
+        {
+            $group: {
+                _id: null,
+                totalPurchaseAmount: { $sum: '$total_price' }
+            }
+        }
+    ])
+
+    res.status(200).json({ thisMonthTotalPurchaseAmount: total[0].totalPurchaseAmount })
+})
 
 // ** @desc Get Purchase product
 // ** route GET /transaction/purchase/:fromDate/:toDate
@@ -60,7 +94,7 @@ export const getAllPurchases = expressAsyncHandler(async (req, res) => {
 export const addPurchase = expressAsyncHandler(async (req, res) => {
 
     const data = req.body
-    console.log(data)
+
     const findProduct = await Product.findOneAndUpdate(
         {
             $or: [
@@ -103,6 +137,41 @@ export const addPurchase = expressAsyncHandler(async (req, res) => {
 
 // ? ===================== sale api =======================
 
+// ** @desc Get This Month total Sold products
+// ** route GET /transaction/sale/this_month/:fromDate/:toDate
+// ** @access Public
+export const getThisMonthSoldAmount = expressAsyncHandler(async (req, res) => {
+
+    const { fromDate, toDate } = req.params
+
+    if (!fromDate || !toDate) return res.status(400).json('fromDate and toDate are missing!')
+
+    const start = new Date(fromDate)
+    const end = new Date(toDate)
+    end.setHours(23)
+    end.setMinutes(59)
+    end.setSeconds(59)
+
+    const total = await Sale.aggregate([
+        {
+            $match: {
+                createdAt: {
+                    $gte: start, // Don't use ISOString 
+                    $lte: end // Don't use ISOString 
+                }
+            }
+        },
+        {
+            $group: {
+                _id: null,
+                totalSoldAmount: { $sum: '$total_price' }
+            }
+        }
+    ])
+
+    res.status(200).json({ thisMonthTotalSoldAmount: total[0].totalSoldAmount })
+})
+
 // ** @desc get Sold products
 // ** route GET /transaction/sale
 // ** @access Public
@@ -137,7 +206,6 @@ export const getAllSales = expressAsyncHandler(async (req, res) => {
                 }
             ])
 
-            console.log(total[0])
             res.json({ allSoldData, totalSoldAmount: total[0]?.totalSoldAmount || 0, totalProfit: total[0]?.totalProfit || 0 })
 
         } catch (error) {

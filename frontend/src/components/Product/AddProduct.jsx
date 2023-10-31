@@ -14,10 +14,11 @@ const AddProduct = ({ successNotify }) => {
         brand: "",
         description: "",
         purchase_price: "",
+        stock_limit: 0,
         sale_price: ""
     }
 
-    const [formValue, setFormValue] = useState({...emptyForm})
+    const [formValue, setFormValue] = useState({ ...emptyForm })
 
     const [errorsMessage, setErrorMessage] = useState({})
 
@@ -72,6 +73,10 @@ const AddProduct = ({ successNotify }) => {
                         <Col xs={12} sm={12} md={4} lg={3} xl>
                             <Form.Label>Description</Form.Label>
                             <Form.Control type="text" placeholder="Description" name='description' value={formValue.description} onChange={handleInput} />
+                        </Col>
+                        <Col xs={12} sm={12} md={4} lg={3} xl>
+                            <Form.Label>Stock limit alert</Form.Label>
+                            <Form.Control type="number" placeholder="Purchase price" name='stock_limit' min='0' value={formValue.stock_limit} onChange={handleInput} />
                         </Col>
                         <Col xs={12} sm={12} md={4} lg={3} xl>
                             <Form.Label>Purchase price</Form.Label>

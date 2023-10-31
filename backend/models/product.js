@@ -23,6 +23,9 @@ const productSchema = mongoose.Schema(
             type: String,
             trim: true
         },
+        stock_limit: {
+            type: Number
+        },
         purchase_price: {
             type: Number,
             require: true

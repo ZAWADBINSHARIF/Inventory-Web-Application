@@ -9,11 +9,13 @@ import axios from "axios"
 import { fetchProducts } from "../../redux/productSlice.js"
 import SuggestionTable from "../SuggestionTable/SuggestionTable.jsx"
 import { fetchPurchases } from "../../redux/purchaseSlice.js"
+import useDefaultDate from '../../customs/hooks/useDefaultDate.jsx'
 
 const AddPurchase = ({ dangerNotify, successNotify }) => {
 
     const dispatch = useDispatch()
     const allProducts = useSelector(state => state.products.data)
+    const [fromDate, toDate] = useDefaultDate()
 
     const current = new Date()
     const today = `${current.getFullYear()}-${current.getMonth() + 1}-${current.getDate()}`
@@ -71,13 +73,14 @@ const AddPurchase = ({ dangerNotify, successNotify }) => {
         axios.post('/transaction/purchase', {
             ...formData
         }).then(response => {
-            dispatch(fetchPurchases())
+            dispatch(fetchPurchases({ fromDate, toDate }))
             successNotify(response.data.message)
             setFormData(emptyForm)
             setErrorMessage({})
         }).catch(error => {
-            setErrorMessage(error.response.data.errors)
-            dangerNotify(error.response.data.errorMessage)
+            console.log(error)
+            setErrorMessage(error.response?.data?.errors)
+            dangerNotify(error.response?.data?.errorMessage)
         })
 
         e.target.disabled = false

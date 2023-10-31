@@ -28,7 +28,7 @@ const purchaseSlice = createSlice({
     }
 })
 
-export const { setAllPurchase, setStatus, setTotalPurchaseAmount } = purchaseSlice.actions
+export const { setAllPurchase, setStatus, setTotalPurchaseAmount, postPurchasesProductThunk } = purchaseSlice.actions
 export default purchaseSlice.reducer
 
 export function fetchPurchases({ fromDate, toDate }) {
